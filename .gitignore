@@ -17,3 +17,5 @@ Thumbs.db
 
 # Root env (secrets)
 .env
+
+skyintel_backend/google-ads.yaml
