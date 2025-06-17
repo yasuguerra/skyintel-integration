@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+skyintel_backend/.env
+skyintel_backend/*.json
+
+# Node
+node_modules/
+dist/
+*.log
+insight-social-pilot-ai/.env
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Root env (secrets)
+.env
