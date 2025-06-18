@@ -74,10 +74,12 @@ def unify_data(contents, filenames):
 
 # --- Funciones de 'web_social.py' ---
 
-def get_facebook_data(endpoint, params={}):
+def get_facebook_data(endpoint, params=None):
     """Realiza una solicitud a la API Graph de Facebook."""
     base_url = "https://graph.facebook.com/v22.0/"
     url = f"{base_url}{endpoint}"
+    if params is None:
+        params = {}
     params['access_token'] = FB_ACCESS_TOKEN
     try:
         response = requests.get(url, params=params)

@@ -1,11 +1,13 @@
 
 import { useState } from "react";
+import { format, subDays } from "date-fns";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BarChart3, Users, DollarSign, TrendingUp, Zap, Brain } from "lucide-react";
 import GoogleAnalytics from "@/components/dashboard/GoogleAnalytics";
+import { DateRangePicker, DateRange } from "@/components/ui/date-range-picker";
 import GoogleAds from "@/components/dashboard/GoogleAds";
 import FacebookDashboard from "@/components/dashboard/FacebookDashboard";
 import InstagramDashboard from "@/components/dashboard/InstagramDashboard";
@@ -14,6 +16,10 @@ import AIInsights from "@/components/dashboard/AIInsights";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [dateRange, setDateRange] = useState<DateRange>({
+    from: subDays(new Date(), 29),
+    to: new Date(),
+  });
 
   const platformStats = {
     ga4: { users: "45.2K", change: "+12.5%" },
@@ -37,17 +43,18 @@ const Index = () => {
                 Comprehensive insights across all your digital platforms
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="flex items-center gap-1">
-                <Zap className="h-3 w-3" />
-                Live Data
-              </Badge>
-              <Button variant="outline" className="flex items-center gap-2">
-                <Brain className="h-4 w-4" />
-                AI Insights
-              </Button>
-            </div>
+          <div className="flex items-center gap-2">
+            <Badge variant="secondary" className="flex items-center gap-1">
+              <Zap className="h-3 w-3" />
+              Live Data
+            </Badge>
+            <Button variant="outline" className="flex items-center gap-2">
+              <Brain className="h-4 w-4" />
+              AI Insights
+            </Button>
           </div>
+        </div>
+        <DateRangePicker value={dateRange} onChange={setDateRange} className="mb-6" />
 
           {/* Quick Stats Overview */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
@@ -124,7 +131,12 @@ const Index = () => {
           </TabsContent>
 
           <TabsContent value="ga4">
-            <GoogleAnalytics />
+            {dateRange.from && dateRange.to && (
+              <GoogleAnalytics
+                startDate={format(dateRange.from, "yyyy-MM-dd")}
+                endDate={format(dateRange.to, "yyyy-MM-dd")}
+              />
+            )}
           </TabsContent>
 
           <TabsContent value="googleads">
